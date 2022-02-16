@@ -1,8 +1,8 @@
 # team03-w22-6pm-4
 [![codecov](https://codecov.io/gh/ucsb-cs156-w22/team03-w22-6pm-4/branch/main/graph/badge.svg?token=lVJtg81KeL)](https://codecov.io/gh/ucsb-cs156-w22/team03-w22-6pm-4)
 Storybook is here:
-* docs:
-* QA:
+* docs: <https://ucsb-cs156-w22.github.io/team03-w22-6pm-4-docs/>
+* QA: <https://ucsb-cs156-w22.github.io/team03-w22-6pm-4-docs-qa/>
 
 Heroku apps are here:
 * Production: <https://team03-w22-6pm-4.herokuapp.com/>
