@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 
 import edu.ucsb.cs156.example.services.CurrentUserService;
 import edu.ucsb.cs156.example.services.GrantedAuthoritiesService;
-import edu.ucsb.cs156.team02.services.LoggingService;
 
 @TestConfiguration
 public class TestConfig {
