@@ -1,8 +1,12 @@
 # team03-w22-6pm-4
 [![codecov](https://codecov.io/gh/ucsb-cs156-w22/team03-w22-6pm-4/branch/main/graph/badge.svg?token=lVJtg81KeL)](https://codecov.io/gh/ucsb-cs156-w22/team03-w22-6pm-4)
 Storybook is here:
-* Production: <https://w22-6pm-4-team03.herokuapp.com/>
-* QA:  <https://w22-6pm-4-team03-qa.herokuapp.com/>
+* docs: <https://ucsb-cs156-w22.github.io/team03-w22-6pm-4-docs/>
+* QA: <https://ucsb-cs156-w22.github.io/team03-w22-6pm-4-docs-qa/>
+
+Heroku apps are here:
+* Production: <https://team03-w22-6pm-4.herokuapp.com/>
+* QA:  <https://team03-w22-6pm-4-qa.herokuapp.com/>
 
 The GitHub actions script to deploy the Storybook to QA requires some configuration; see [docs/github-actions.md](docs/github-actions.md) for details.
 
