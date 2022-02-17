@@ -54,8 +54,12 @@ public class EarthquakesController extends ApiController
     ) throws JsonProcessingException {
         // TODO: Remove this log message.
         log.info("upsert with parameters magnitude={}, distance={}", magnitude, distance);
+
         Features features = querier.getJSON(distance, magnitude);
         Features saved = earthquakes.save(features);
+
+        // TODO: How does ResponseEntity know how to convert a Features into a body? 🤯
+        // All of the magic is driving me nuts!
         return ResponseEntity.ok().body(saved);
     }
 }
