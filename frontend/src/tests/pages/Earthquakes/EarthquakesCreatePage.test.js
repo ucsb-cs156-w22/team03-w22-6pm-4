@@ -54,10 +54,11 @@ describe("EarthquakesCreatePage tests", () => {
 
         const queryClient = new QueryClient();
         const earthquake = {
-            id: 17,
-            quarterYYYYQField: 20221,
-            name: "Groundhog Day",
-            localDateTime: "2022-02-02T00:00"
+            id: 1,
+            title: 'M 2.2 - 10km ESE of Ojai, CA',
+            mag: 2.16,
+            place: '10km ESE of Ojai, CA',
+            time: 1644571919000
         };
 
 
@@ -72,17 +73,19 @@ describe("EarthquakesCreatePage tests", () => {
         );
 
         await waitFor(() => {
-            expect(getByTestId("UCSBDateForm-quarterYYYYQ")).toBeInTheDocument();
+            expect(getByTestId("EarthquakeForm-title")).toBeInTheDocument();
         });
 
-        const quarterYYYYQField = getByTestId("UCSBDateForm-quarterYYYYQ");
-        const nameField = getByTestId("UCSBDateForm-name");
-        const localDateTimeField = getByTestId("UCSBDateForm-localDateTime");
-        const submitButton = getByTestId("UCSBDateForm-submit");
+        const titleField = getByTestId("EarthquakeForm-title");
+        const magField = getByTestId("EarthquakeForm-mag");
+        const placeField = getByTestId("EarthquakeForm-place");
+        const timeField = getByTestId("EarthquakeForm-time");
+        const submitButton = getByTestId("EarthquakeForm-submit");
 
-        fireEvent.change(quarterYYYYQField, { target: { value: '20221' } });
-        fireEvent.change(nameField, { target: { value: 'Groundhog Day' } });
-        fireEvent.change(localDateTimeField, { target: { value: '2022-02-02T00:00' } });
+        fireEvent.change(titleField, { target: { value: 'a' } });
+        fireEvent.change(magField, { target: { value: '10.0' } });
+        fireEvent.change(placeField, { target: { value: 'b' } });
+        fireEvent.change(timeField, { target: { value: '0' } });
 
         expect(submitButton).toBeInTheDocument();
 
@@ -92,12 +95,13 @@ describe("EarthquakesCreatePage tests", () => {
 
         expect(axiosMock.history.post[0].params).toEqual(
             {
-            "localDateTime": "2022-02-02T00:00",
-            "name": "Groundhog Day",
-            "quarterYYYYQ": "20221"
+            title: 'a',
+            mag: 10.0,
+            place: 'b',
+            time: 0
         });
 
-        expect(mockToast).toBeCalledWith("New earthquake Created - id: 17 name: Groundhog Day");
+        expect(mockToast).toBeCalledWith("New earthquake Created - id: 17 title: a");
         expect(mockNavigate).toBeCalledWith({ "to": "/earthquakes/list" });
     });
 
