@@ -1,10 +1,13 @@
 package edu.ucsb.cs156.example.documents;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Properties
 {
     // According to #25, we are interested in displaying only the title,
@@ -20,14 +23,15 @@ public class Properties
     "title": "M 2.6 - 10km NW of Santa Paula, CA"
     */
 
-    // I don't want to store the `time` field in a Long because it may overflow.
-    // Will convert it to a String. Is this going to cause a problem when
-    // Jackson — not me, the library — tries to stuff a JSON object with a
+    // TODO: I don't want to store the `time` field in a Long because it may
+    // overflow. Will convert it to a String. Is this going to cause a problem
+    // when Jackson — not me, the library — tries to stuff a JSON object with a
     // JSON value of type number in it?
 
-    // https://www.json.org/json-en.html
+    // Answer: No, Jackson — not me, the library — has no problem coercing the
+    // JSON data to the desired Java type, and will explode if it can't.
 
-    // I don't know how comfortable Jackson is with type conversions!
+    // https://www.json.org/json-en.html
 
     private Double mag;
     private String place;

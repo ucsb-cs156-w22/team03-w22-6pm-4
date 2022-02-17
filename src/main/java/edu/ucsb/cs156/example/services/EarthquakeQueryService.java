@@ -3,10 +3,6 @@ package edu.ucsb.cs156.example.services;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.web.client.RestTemplate;
-
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -17,6 +13,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import edu.ucsb.cs156.example.documents.Features;
 
 @Slf4j
 @Service
@@ -32,7 +34,7 @@ public class EarthquakeQueryService
 
     public static final String ENDPOINT = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minmagnitude={minMag}&maxradiuskm={distance}&latitude={latitude}&longitude={longitude}";
 
-    public String getJSON(String distance, String minMag) throws HttpClientErrorException {
+    public Features getJSON(String distance, String minMag) throws HttpClientErrorException, JsonProcessingException {
         log.info("distance={}, minMag={}", distance, minMag);
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
@@ -42,11 +44,16 @@ public class EarthquakeQueryService
 
         String ucsbLat = "34.4140"; // hard coded params for Storke Tower
         String ucsbLong = "-119.8489";
-        Map<String, String> uriVariables = Map.of("minMag", minMag, "distance", distance, "latitude", ucsbLat,
-                "longitude", ucsbLong);
+        Map<String, String> uriVariables = Map.of("minMag", minMag, "distance", distance, "latitude", ucsbLat, "longitude", ucsbLong);
 
-        ResponseEntity<String> re = restTemplate.exchange(ENDPOINT, HttpMethod.GET, entity, String.class,
-                uriVariables);
-        return re.getBody();
+        ResponseEntity<String> re = restTemplate.exchange(ENDPOINT, HttpMethod.GET, entity, String.class, uriVariables);
+
+        // Modifications follow.
+
+        String json = re.getBody();
+
+        Features features = mapper.readValue(json, Features.class);
+
+        return features;
     }
 }
