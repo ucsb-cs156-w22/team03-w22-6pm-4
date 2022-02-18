@@ -41,8 +41,8 @@ public class EarthquakeQueryService
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        String ucsbLat = "34.4140"; // hard coded params for Storke Tower
-        String ucsbLong = "-119.8489";
+        String ucsbLat = "34.4140";    // Storke. 🔔
+        String ucsbLong = "-119.8489"; // <-
         Map<String, String> uriVariables = Map.of("minMag", minMag, "distance", distance, "latitude", ucsbLat, "longitude", ucsbLong);
 
         ResponseEntity<String> re = restTemplate.exchange(ENDPOINT, HttpMethod.GET, entity, String.class, uriVariables);

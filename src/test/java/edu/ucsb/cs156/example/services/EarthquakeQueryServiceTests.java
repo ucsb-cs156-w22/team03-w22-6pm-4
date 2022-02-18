@@ -1,5 +1,7 @@
 package edu.ucsb.cs156.example.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.http.MediaType;
@@ -12,36 +14,40 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
 
+import edu.ucsb.cs156.example.documents.Features;
+
 @RestClientTest(EarthquakeQueryService.class)
-public class EarthquakeQueryServiceTests {
+public class EarthquakeQueryServiceTests
+{
+    @Autowired
+    private MockRestServiceServer server;
 
     @Autowired
-    private MockRestServiceServer mockRestServiceServer;
-
-    @Autowired
-    private EarthquakeQueryService earthquakeQueryService;
-
-    /*
-    TODO: Querier needs to return a Features.
+    private EarthquakeQueryService querier;
 
     @Test
-    public void test_getJSON() {
+    public void test_getJSON() throws JsonProcessingException {
         String distance = "10";
         String minMag = "1.5";
-        String ucsbLat = "34.4140"; // hard coded params for Storke Tower
-        String ucsbLong = "-119.8489";
-        String expectedURL = EarthquakeQueryService.ENDPOINT.replace("{distance}", distance)
-                .replace("{minMag}", minMag).replace("{latitude}", ucsbLat).replace("{longitude}", ucsbLong);
+        String ucsbLat = "34.4140";    // Storke. 🔔
+        String ucsbLong = "-119.8489"; // <-
 
-        String fakeJsonResult = "{ \"fake\" : \"result\" }";
+        String expectedURL = EarthquakeQueryService.ENDPOINT
+            .replace("{distance}", distance)
+            .replace("{minMag}", minMag)
+            .replace("{latitude}", ucsbLat)
+            .replace("{longitude}", ucsbLong);
 
-        this.mockRestServiceServer.expect(requestTo(expectedURL))
-                .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
-                .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
-                .andRespond(withSuccess(fakeJsonResult, MediaType.APPLICATION_JSON));
+        String someJSON = "{ \"type\": \"Not GeoJSON, sorry.\", \"metadata\": null, \"features\": null }";
+        Features someFeatures = new Features();
+        someFeatures.setType("Not GeoJSON, sorry.");
 
-        String actualResult = earthquakeQueryService.getJSON(distance, minMag);
-        assertEquals(fakeJsonResult, actualResult);
+        this.server.expect(requestTo(expectedURL))
+            .andExpect(header("Accept", MediaType.APPLICATION_JSON.toString()))
+            .andExpect(header("Content-Type", MediaType.APPLICATION_JSON.toString()))
+            .andRespond(withSuccess(someJSON, MediaType.APPLICATION_JSON));
+
+        Features actual = querier.getJSON(distance, minMag);
+        assertEquals(someFeatures, actual);
     }
-    */
 }
