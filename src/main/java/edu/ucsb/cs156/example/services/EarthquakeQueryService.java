@@ -35,7 +35,6 @@ public class EarthquakeQueryService
     public static final String ENDPOINT = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minmagnitude={minMag}&maxradiuskm={distance}&latitude={latitude}&longitude={longitude}";
 
     public Features getJSON(String distance, String minMag) throws HttpClientErrorException, JsonProcessingException {
-        log.info("distance={}, minMag={}", distance, minMag);
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -48,7 +47,7 @@ public class EarthquakeQueryService
 
         ResponseEntity<String> re = restTemplate.exchange(ENDPOINT, HttpMethod.GET, entity, String.class, uriVariables);
 
-        // Modifications follow.
+        // TODO: Modifications to the querier follow. Are they okay?
 
         String json = re.getBody();
 

@@ -1,6 +1,7 @@
 package edu.ucsb.cs156.example.controllers;
 
 import edu.ucsb.cs156.example.collections.EarthquakesCollection;
+import edu.ucsb.cs156.example.documents.Feature;
 import edu.ucsb.cs156.example.documents.Features;
 import edu.ucsb.cs156.example.services.EarthquakeQueryService;
 
@@ -40,26 +41,37 @@ public class EarthquakesController extends ApiController
     @GetMapping("/all")
     @ApiOperation(value = "List all earthquakes.")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Iterable<Features> getAll() {
+    public Iterable<Feature> list() {
         return earthquakes.findAll();
     }
 
-    @PostMapping("/upsert")
+    // TODO: Are we supposed to use HTTP POST for deletion? I'm not convinced.
+    // StackOverflow is talking about the idempotence of HTTP methods. And there
+    // is a DELETE.
+
+    @PostMapping("/purge")
+    @ApiOperation(value = "Purge all earthquakes.", notes = "Only accessible to administrators.")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void purge() {
+        earthquakes.deleteAll();
+    }
+
+    @PostMapping("/retrieve")
     @ApiOperation(value = "Store recent earthquakes.", notes = "Delegate to the query service from team01.")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<Features> upsert(
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Features upsert(
         // Why are these parameters strings? I don't understand why the querier mandates that.
         @ApiParam("Minimum magnitude.") @RequestParam String magnitude,
         @ApiParam("Distance from Storke.") @RequestParam String distance
     ) throws JsonProcessingException {
-        // TODO: Remove this log message.
-        log.info("upsert with parameters magnitude={}, distance={}", magnitude, distance);
-
         Features features = querier.getJSON(distance, magnitude);
-        Features saved = earthquakes.save(features);
 
-        // TODO: How does ResponseEntity know how to convert a Features into a body? 🤯
-        // All of the magic is driving me nuts!
-        return ResponseEntity.ok().body(saved);
+        earthquakes.saveAll(features.getFeatures());
+
+        // TODO: Does this just return 200 as the HTTP status? And plop the
+        // serialized object — how?! — in the body of the response? Sure, why
+        // not.
+
+        return features;
     }
 }
