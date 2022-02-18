@@ -53,10 +53,10 @@ export default function CollegiateSubredditsTable({ subreddits, currentUser }) {
 
     // Stryker disable next-line ArrayDeclaration : [columns] is a performance optimization
     const memoizedColumns = React.useMemo(() => columns, [columns]);
-    const memoizedDates = React.useMemo(() => subreddits, [subreddits]);
+    const memoizedSubreddits = React.useMemo(() => subreddits, [subreddits]);
 
     return <OurTable
-        data={memoizedDates}
+        data={memoizedSubreddits}
         columns={memoizedColumns}
         testid={"CollegiateSubredditsTable"}
     />;

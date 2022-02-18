@@ -11,7 +11,7 @@ jest.mock('react-toastify', () => {
     };
 });
 
-describe("UCSBSubjectUtils", () => {
+describe("CollegiateSubredditUtils", () => {
 
     describe("onDeleteSuccess", () => {
 

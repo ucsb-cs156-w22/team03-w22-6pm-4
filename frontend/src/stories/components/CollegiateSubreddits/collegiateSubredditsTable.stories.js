@@ -1,29 +1,29 @@
 import React from 'react';
 
-import collegiateSubredditsTable from "main/components/collegiateSubreddits/collegiateSubredditsTable";
+import CollegiateSubredditsTable from "main/components/collegiateSubreddits/CollegiateSubredditsTable";
 import { collegiateSubredditsFixtures } from 'fixtures/collegiateSubredditsFixtures';
 
 export default {
-    title: 'components/collegiateSubreddits/collegiateSubredditsTable',
-    component: collegiateSubredditsTable
+    title: 'components/collegiateSubreddits/CollegiateSubredditsTable',
+    component: CollegiateSubredditsTable
 };
 
 const Template = (args) => {
     return (
-        <collegiateSubredditsTable {...args} />
+        <CollegiateSubredditsTable {...args} />
     )
 };
 
 export const Empty = Template.bind({});
 
 Empty.args = {
-    dates: []
+    subreddits: []
 };
 
-export const ThreeDates = Template.bind({});
+export const ThreeCollegiateSubreddits = Template.bind({});
 
-ThreeDates.args = {
-    dates: collegiateSubredditsFixtures.threeDates
+ThreeCollegiateSubreddits.args = {
+    subreddits: collegiateSubredditsFixtures.threeCollegiateSubreddits
 };
 
 
