@@ -30,6 +30,7 @@ import edu.ucsb.cs156.example.collections.EarthquakesCollection;
 import edu.ucsb.cs156.example.controllers.EarthquakesController;
 import edu.ucsb.cs156.example.ControllerTestCase;
 import edu.ucsb.cs156.example.documents.Feature;
+import edu.ucsb.cs156.example.documents.Features;
 import edu.ucsb.cs156.example.repositories.UserRepository;
 import edu.ucsb.cs156.example.services.EarthquakeQueryService;
 import edu.ucsb.cs156.example.testconfig.TestConfig;
@@ -62,7 +63,7 @@ public class EarthquakesControllerTests extends ControllerTestCase
     {
         Feature shaky = new Feature();
         shaky.setType("Some shaky friend.");
-        ArrayList<Feature> shakies = new ArrayList<Feature>();
+        List<Feature> shakies = new ArrayList<Feature>();
         shakies.add(shaky);
 
         when(earthquakes.findAll()).thenReturn(shakies);
@@ -91,11 +92,11 @@ public class EarthquakesControllerTests extends ControllerTestCase
     @Test
     public void user_does_purge() throws Exception
     {
-        mockMvc.perform(post("/api/earthquakes/purge"))
+        mockMvc.perform(post("/api/earthquakes/purge").with(csrf()))
             .andExpect(status().is(403));
     }
 
-    @WithMockUser(roles = { "ADMIN", "USER" })
+    @WithMockUser(roles = { "ADMIN" })
     @Test
     public void admin_does_purge() throws Exception
     {
@@ -103,7 +104,7 @@ public class EarthquakesControllerTests extends ControllerTestCase
 
         doNothing().when(earthquakes).deleteAll();
 
-        mockMvc.perform(post("/api/earthquakes/purge"))
+        mockMvc.perform(post("/api/earthquakes/purge").with(csrf()))
             .andExpect(status().isOk());
 
         verify(earthquakes, times(1)).deleteAll();
@@ -114,7 +115,7 @@ public class EarthquakesControllerTests extends ControllerTestCase
     @Test
     public void stranger_does_retrieve() throws Exception
     {
-        mockMvc.perform(post("/api/earthquakes/retrieve"))
+        mockMvc.perform(post("/api/earthquakes/retrieve?magnitude=2&distance=100").with(csrf()))
             .andExpect(status().is(403));
     }
 
@@ -122,7 +123,31 @@ public class EarthquakesControllerTests extends ControllerTestCase
     @Test
     public void user_does_retrieve() throws Exception
     {
-        mockMvc.perform(post("/api/earthquakes/retrieve"))
+        mockMvc.perform(post("/api/earthquakes/retrieve?magnitude=2&distance=100").with(csrf()))
             .andExpect(status().is(403));
+    }
+
+    @WithMockUser(roles = { "ADMIN" })
+    @Test
+    public void admin_does_retrieve() throws Exception
+    {
+        Features someFeatures = new Features();
+        someFeatures.setType("Not GeoJSON, sorry.");
+        List<Feature> features = new ArrayList<Feature>();
+        someFeatures.setFeatures(features);
+
+        when(querier.getJSON("100", "2")).thenReturn(someFeatures);
+        when(earthquakes.saveAll(features)).thenReturn(features);
+
+        MvcResult response = mockMvc.perform(post("/api/earthquakes/retrieve?magnitude=2&distance=100").with(csrf()))
+            .andExpect(status().isOk()).andReturn();
+
+        verify(querier, times(1)).getJSON("100", "2");
+        verify(earthquakes, times(1)).saveAll(features);
+
+        String expected = "[]";
+        String actual = response.getResponse().getContentAsString();
+
+        assertEquals(expected, actual);
     }
 }

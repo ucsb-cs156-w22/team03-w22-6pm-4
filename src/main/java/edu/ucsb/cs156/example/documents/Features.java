@@ -14,5 +14,5 @@ public class Features
 {
     private String type;
     private Metadata metadata;
-    private List<Feature> features;
+    private Iterable<Feature> features;
 }
