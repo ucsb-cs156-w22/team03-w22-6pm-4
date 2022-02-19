@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import edu.ucsb.cs156.example.collections.EarthquakesCollection;
 import edu.ucsb.cs156.example.controllers.EarthquakesController;
 import edu.ucsb.cs156.example.ControllerTestCase;
+import edu.ucsb.cs156.example.documents.Feature;
 import edu.ucsb.cs156.example.repositories.UserRepository;
 import edu.ucsb.cs156.example.services.EarthquakeQueryService;
 import edu.ucsb.cs156.example.testconfig.TestConfig;
@@ -54,6 +56,28 @@ public class EarthquakesControllerTests extends ControllerTestCase
             .andExpect(status().is(403));
     }
 
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void user_does_list() throws Exception
+    {
+        Feature shaky = new Feature();
+        shaky.setType("Some shaky friend.");
+        ArrayList<Feature> shakies = new ArrayList<Feature>();
+        shakies.add(shaky);
+
+        when(earthquakes.findAll()).thenReturn(shakies);
+
+        MvcResult response = mockMvc.perform(get("/api/earthquakes/all"))
+            .andExpect(status().isOk()).andReturn();
+
+        verify(earthquakes, times(1)).findAll();
+
+        String expected = mapper.writeValueAsString(shakies);
+        String actual = response.getResponse().getContentAsString();
+
+        assertEquals(expected, actual);
+    }
+
     /* POST /api/earthquakes/purge */
 
     @Test
@@ -69,6 +93,20 @@ public class EarthquakesControllerTests extends ControllerTestCase
     {
         mockMvc.perform(post("/api/earthquakes/purge"))
             .andExpect(status().is(403));
+    }
+
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void admin_does_purge() throws Exception
+    {
+        // TODO: Absolutely going to fail mutation testing.
+
+        doNothing().when(earthquakes).deleteAll();
+
+        mockMvc.perform(post("/api/earthquakes/purge"))
+            .andExpect(status().isOk());
+
+        verify(earthquakes, times(1)).deleteAll();
     }
 
     /* POST /api/earthquakes/retrieve */

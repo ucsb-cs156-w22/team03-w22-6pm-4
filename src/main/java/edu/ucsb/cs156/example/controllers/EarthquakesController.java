@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,7 +58,7 @@ public class EarthquakesController extends ApiController
     }
 
     @PostMapping("/retrieve")
-    @ApiOperation(value = "Store recent earthquakes.", notes = "Delegate to the query service from team01.")
+    @ApiOperation(value = "Store recent earthquakes.", notes = "Delegate to the query service from team01. Only accessible to administrators. Beware duplicates.")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Features upsert(
         // Why are these parameters strings? I don't understand why the querier mandates that.
