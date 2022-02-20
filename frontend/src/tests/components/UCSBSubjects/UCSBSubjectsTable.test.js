@@ -114,7 +114,11 @@ describe("UserTable tests", () => {
     const editButton = getByTestId(`UCSBSubjectsTable-cell-row-0-col-Edit-button`);
     expect(editButton).toBeInTheDocument();
     
+    const deleteButton = getByTestId(`UCSBSubjectsTable-cell-row-0-col-Delete-button`);
+    expect(deleteButton).toBeInTheDocument();
+
     fireEvent.click(editButton);
+    fireEvent.click(deleteButton);
 
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/UCSBSubjects/edit/1'));
 
