@@ -13,6 +13,13 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedNavigate
 }));
 
+const mockedMutate = jest.fn();
+
+jest.mock('main/utils/useBackend', () => ({
+    ...jest.requireActual('main/utils/useBackend'),
+    useBackendMutation: () => ({mutate: mockedMutate})
+}));
+
 describe("UserTable tests", () => {
   const queryClient = new QueryClient();
 
@@ -119,5 +126,25 @@ describe("UserTable tests", () => {
 
   });
 
+  //test("purge callback is valid", async () => {
+    //const currentUser = currentUserFixtures.adminUser;
+
+    //const { getByText, getByTestId } = render(
+      //<QueryClientProvider client={queryClient}>
+        //<MemoryRouter>
+          //<EarthquakesTable earthquakes={earthquakesFixtures.threeEarthquakes} currentUser={currentUser} />
+        //</MemoryRouter>
+      //</QueryClientProvider>
+
+    //);    
+    //await waitFor(() => { expect(getByTestId("EarthquakesTable-cell-row-0-col-id")).toHaveTextContent("1"); });
+    
+    //const purgeButton = getByTestId("EarthquakesTable-cell-row-0-col--button");
+    //expect(purgeButton).toBeInTheDocument();
+    
+    //fireEvent.click(purgeButton);
+
+    //await waitFor(() => expect(mockedMutate).toHaveBeenCalledTimes(1));
+  //});
 });
 

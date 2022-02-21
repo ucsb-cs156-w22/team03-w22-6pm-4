@@ -10,21 +10,22 @@ export default function EarthquakesTable({ earthquakes, currentUser }) {
 
     const navigate = useNavigate();
 
-    const editCallback = (cell) => {
-        navigate(`/earthquakes/edit/${cell.row.values.id}`)
-    }
+    //const editCallback = (cell) => {
+        //navigate(`/earthquakes/edit/${cell.row.values.id}`)
+    //}
 
-    // Stryker disable all : hard to test for query caching
+    //// Stryker disable all : hard to test for query caching
 
-    const deleteMutation = useBackendMutation(
-        cellToAxiosParamsDelete,
-        { onSuccess: onDeleteSuccess },
-        ["/api/earthquakes/all"]
-    );
-    // Stryker enable all 
+    //const deleteMutation = useBackendMutation(
+        //cellToAxiosParamsDelete,
+        //{ onSuccess: onDeleteSuccess },
+        //["/api/earthquakes/all"]
+    //);
+    //// Stryker enable all 
 
-    // Stryker disable next-line all : TODO try to make a good test for this
-    const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
+    //// ssStryker isable next-line all : TODO try to make a good test for this
+    ////const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
+    //// no such operation exists for earthquake
 
 
     const columns = [
@@ -51,8 +52,8 @@ export default function EarthquakesTable({ earthquakes, currentUser }) {
     ];
 
     if (hasRole(currentUser, "ROLE_ADMIN")) {
-        columns.push(ButtonColumn("Edit", "primary", editCallback, "EarthquakesTable"));
-        columns.push(ButtonColumn("Delete", "danger", deleteCallback, "EarthquakesTable"));
+        //columns.push(ButtonColumn("Edit", "primary", editCallback, "EarthquakesTable"));
+        //columns.push(ButtonColumn("Delete", "danger", deleteCallback, "EarthquakesTable"));
     } 
 
     // Stryker disable next-line ArrayDeclaration : [columns] is a performance optimization
