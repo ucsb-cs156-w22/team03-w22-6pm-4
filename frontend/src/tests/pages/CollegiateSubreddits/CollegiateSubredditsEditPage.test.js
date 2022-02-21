@@ -1,7 +1,7 @@
 import { fireEvent, queryByTestId, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import collegiateSubredditsEditPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsEditPage";
+import CollegiateSubredditsEditPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsEditPage";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
@@ -32,7 +32,7 @@ jest.mock('react-router-dom', () => {
     };
 });
 
-describe("collegiateSubredditsEditPage tests", () => {
+describe("CollegiateSubredditsEditPage tests", () => {
 
     describe("when the backend doesn't return a todo", () => {
 
@@ -51,7 +51,7 @@ describe("collegiateSubredditsEditPage tests", () => {
             const {getByText, queryByTestId} = render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
-                        <collegiateSubredditsEditPage />
+                        <CollegiateSubredditsEditPage />
                     </MemoryRouter>
                 </QueryClientProvider>
             );
@@ -88,7 +88,7 @@ describe("collegiateSubredditsEditPage tests", () => {
             render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
-                        <collegiateSubredditsEditPage />
+                        <CollegiateSubredditsEditPage />
                     </MemoryRouter>
                 </QueryClientProvider>
             );
@@ -99,7 +99,7 @@ describe("collegiateSubredditsEditPage tests", () => {
             const { getByTestId } = render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
-                        <collegiateSubredditsEditPage />
+                        <CollegiateSubredditsEditPage />
                     </MemoryRouter>
                 </QueryClientProvider>
             );
@@ -125,7 +125,7 @@ describe("collegiateSubredditsEditPage tests", () => {
             const { getByTestId } = render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
-                        <collegiateSubredditsEditPage />
+                        <CollegiateSubredditsEditPage />
                     </MemoryRouter>
                 </QueryClientProvider>
             );

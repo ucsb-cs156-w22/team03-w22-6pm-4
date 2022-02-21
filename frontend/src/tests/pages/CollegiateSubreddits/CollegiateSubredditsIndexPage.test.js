@@ -1,7 +1,7 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import collegiateSubredditsIndexPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsIndexPage";
+import CollegiateSubredditsIndexPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsIndexPage";
 
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
@@ -22,7 +22,7 @@ jest.mock('react-toastify', () => {
     };
 });
 
-describe("collegiateSubredditsIndexPage tests", () => {
+describe("CollegiateSubredditsIndexPage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
 
@@ -50,7 +50,7 @@ describe("collegiateSubredditsIndexPage tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <collegiateSubredditsIndexPage />
+                    <CollegiateSubredditsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -66,7 +66,7 @@ describe("collegiateSubredditsIndexPage tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <collegiateSubredditsIndexPage />
+                    <CollegiateSubredditsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -82,7 +82,7 @@ describe("collegiateSubredditsIndexPage tests", () => {
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <collegiateSubredditsIndexPage />
+                    <CollegiateSubredditsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -101,7 +101,7 @@ describe("collegiateSubredditsIndexPage tests", () => {
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <collegiateSubredditsIndexPage />
+                    <CollegiateSubredditsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -123,7 +123,7 @@ describe("collegiateSubredditsIndexPage tests", () => {
         const { queryByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <collegiateSubredditsIndexPage />
+                    <CollegiateSubredditsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -148,7 +148,7 @@ describe("collegiateSubredditsIndexPage tests", () => {
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <collegiateSubredditsIndexPage />
+                    <CollegiateSubredditsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
