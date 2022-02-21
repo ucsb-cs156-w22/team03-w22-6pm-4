@@ -1,7 +1,7 @@
 import { fireEvent, queryByTestId, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import collegiateSubredditsEditPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsEditPage";
+import CollegiateSubredditsEditPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsEditPage";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
@@ -32,7 +32,7 @@ jest.mock('react-router-dom', () => {
     };
 });
 
-describe("collegiateSubredditsEditPage tests", () => {
+describe("CollegiateSubredditsEditPage tests", () => {
 
     describe("when the backend doesn't return a todo", () => {
 
@@ -43,7 +43,7 @@ describe("collegiateSubredditsEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/collegiateSubreddits", { params: { id: 17 } }).timeout();
+            axiosMock.onGet("/api/collegiatesubreddits", { params: { id: 17 } }).timeout();
         });
 
         const queryClient = new QueryClient();
@@ -51,12 +51,12 @@ describe("collegiateSubredditsEditPage tests", () => {
             const {getByText, queryByTestId} = render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
-                        <collegiateSubredditsEditPage />
+                        <CollegiateSubredditsEditPage />
                     </MemoryRouter>
                 </QueryClientProvider>
             );
-            await waitFor(() => expect(getByText("Edit collegiateSubreddit")).toBeInTheDocument());
-            expect(queryByTestId("collegiateSubredditForm-name")).not.toBeInTheDocument();
+            await waitFor(() => expect(getByText("Edit CollegiateSubreddit")).toBeInTheDocument());
+            expect(queryByTestId("CollegiateSubredditForm-name")).not.toBeInTheDocument();
         });
     });
 
@@ -69,17 +69,17 @@ describe("collegiateSubredditsEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/collegiateSubreddits", { params: { id: 17 } }).reply(200, {
+            axiosMock.onGet("/api/collegiatesubreddits", { params: { id: 17 } }).reply(200, {
                 id: 17,
                 name: "a",
                 location: "b",
-                subreddit: "c",
+                subreddit: "c"
             });
-            axiosMock.onPut('/api/collegiateSubreddits').reply(200, {
+            axiosMock.onPut('/api/collegiatesubreddits').reply(200, {
                 id: 17,
-                name: "a",
-                location: "b",
-                subreddit: "c",
+                name: "d",
+                location: "e",
+                subreddit: "f"
             });
         });
 
@@ -88,7 +88,7 @@ describe("collegiateSubredditsEditPage tests", () => {
             render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
-                        <collegiateSubredditsEditPage />
+                        <CollegiateSubredditsEditPage />
                     </MemoryRouter>
                 </QueryClientProvider>
             );
@@ -99,18 +99,18 @@ describe("collegiateSubredditsEditPage tests", () => {
             const { getByTestId } = render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
-                        <collegiateSubredditsEditPage />
+                        <CollegiateSubredditsEditPage />
                     </MemoryRouter>
                 </QueryClientProvider>
             );
 
-            await waitFor(() => expect(getByTestId("collegiateSubredditForm-name")).toBeInTheDocument());
+            await waitFor(() => expect(getByTestId("CollegiateSubredditForm-name")).toBeInTheDocument());
 
-            const idField = getByTestId("collegiateSubredditForm-id");
-            const nameField = getByTestId("collegiateSubredditForm-name");
-            const locationField = getByTestId("collegiateSubredditForm-location");
-            const subredditField = getByTestId("collegiateSubredditForm-subreddit");
-            const submitButton = getByTestId("collegiateSubredditForm-submit");
+            const idField = getByTestId("CollegiateSubredditForm-id");
+            const nameField = getByTestId("CollegiateSubredditForm-name");
+            const locationField = getByTestId("CollegiateSubredditForm-location");
+            const subredditField = getByTestId("CollegiateSubredditForm-subreddit");
+            const submitButton = getByTestId("CollegiateSubredditForm-submit");
 
             expect(idField).toHaveValue("17");
             expect(nameField).toHaveValue("a");
@@ -125,18 +125,18 @@ describe("collegiateSubredditsEditPage tests", () => {
             const { getByTestId } = render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
-                        <collegiateSubredditsEditPage />
+                        <CollegiateSubredditsEditPage />
                     </MemoryRouter>
                 </QueryClientProvider>
             );
 
-            await waitFor(() => expect(getByTestId("collegiateSubredditForm-name")).toBeInTheDocument());
+            await waitFor(() => expect(getByTestId("CollegiateSubredditForm-name")).toBeInTheDocument());
 
-            const idField = getByTestId("collegiateSubredditForm-id");
-            const nameField = getByTestId("collegiateSubredditForm-name");
-            const locationField = getByTestId("collegiateSubredditForm-location");
-            const subredditField = getByTestId("collegiateSubredditForm-subreddit");
-            const submitButton = getByTestId("collegiateSubredditForm-submit");
+            const idField = getByTestId("CollegiateSubredditForm-id");
+            const nameField = getByTestId("CollegiateSubredditForm-name");
+            const locationField = getByTestId("CollegiateSubredditForm-location");
+            const subredditField = getByTestId("CollegiateSubredditForm-subreddit");
+            const submitButton = getByTestId("CollegiateSubredditForm-submit");
 
             expect(idField).toHaveValue("17");
             expect(nameField).toHaveValue("a");
@@ -152,8 +152,8 @@ describe("collegiateSubredditsEditPage tests", () => {
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled);
-            expect(mockToast).toBeCalledWith("collegiateSubreddit Updated - id: 17 name: d");
-            expect(mockNavigate).toBeCalledWith({ "to": "/collegiateSubreddits/list" });
+            expect(mockToast).toBeCalledWith("CollegiateSubreddit Updated - id: 17 name: d");
+            expect(mockNavigate).toBeCalledWith({ "to": "/collegiatesubreddits/list" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
@@ -168,5 +168,3 @@ describe("collegiateSubredditsEditPage tests", () => {
        
     });
 });
-
-
