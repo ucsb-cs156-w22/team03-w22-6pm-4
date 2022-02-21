@@ -16,7 +16,6 @@ import StudentsCreatePage from "main/pages/Students/StudentsCreatePage";
 
 import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage";
 import EarthquakesCreatePage from "main/pages/Earthquakes/EarthquakesCreatePage";
-import EarthquakesEditPage from "main/pages/Earthquakes/EarthquakesEditPage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
@@ -87,7 +86,6 @@ function App() {
         {
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
-              <Route exact path="/earthquakes/edit/:id" element={<EarthquakesEditPage />} />
               <Route exact path="/earthquakes/retrieve" element={<EarthquakesCreatePage />} />
             </>
           )
