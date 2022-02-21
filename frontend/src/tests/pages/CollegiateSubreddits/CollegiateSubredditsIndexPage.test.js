@@ -1,7 +1,7 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import collegiateSubredditsIndexPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsIndexPage";
+import CollegiateSubredditsIndexPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsIndexPage";
 
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
@@ -22,11 +22,11 @@ jest.mock('react-toastify', () => {
     };
 });
 
-describe("collegiateSubredditsIndexPage tests", () => {
+describe("CollegiateSubredditsIndexPage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
 
-    const testId = "collegiateSubredditsTable";
+    const testId = "CollegiateSubredditsTable";
 
     const setupUserOnly = () => {
         axiosMock.reset();
@@ -45,12 +45,12 @@ describe("collegiateSubredditsIndexPage tests", () => {
     test("renders without crashing for regular user", () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiateSubreddits/all").reply(200, []);
+        axiosMock.onGet("/api/collegiatesubreddits/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <collegiateSubredditsIndexPage />
+                    <CollegiateSubredditsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -61,12 +61,12 @@ describe("collegiateSubredditsIndexPage tests", () => {
     test("renders without crashing for admin user", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiateSubreddits/all").reply(200, []);
+        axiosMock.onGet("/api/collegiatesubreddits/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <collegiateSubredditsIndexPage />
+                    <CollegiateSubredditsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -74,15 +74,15 @@ describe("collegiateSubredditsIndexPage tests", () => {
 
     });
 
-    test("renders  three collegiateSubreddits without crashing for regular user", async () => {
+    test("renders three subreddits without crashing for regular user", async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiateSubreddits/all").reply(200, collegiateSubredditsFixtures.threeCollegiateSubreddits);
+        axiosMock.onGet("/api/collegiatesubreddits/all").reply(200, collegiateSubredditsFixtures.threeCollegiateSubreddits);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <collegiateSubredditsIndexPage />
+                    <CollegiateSubredditsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -93,15 +93,15 @@ describe("collegiateSubredditsIndexPage tests", () => {
 
     });
 
-    test("renders  three collegiateSubreddits without crashing for admin user", async () => {
+    test("renders three subreddits without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiateSubreddits/all").reply(200, collegiateSubredditsFixtures.threeCollegiateSubreddits);
+        axiosMock.onGet("/api/collegiatesubreddits/all").reply(200, collegiateSubredditsFixtures.threeCollegiateSubreddits);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <collegiateSubredditsIndexPage />
+                    <CollegiateSubredditsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -116,14 +116,14 @@ describe("collegiateSubredditsIndexPage tests", () => {
         setupUserOnly();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiateSubreddits/all").timeout();
+        axiosMock.onGet("/api/collegiatesubreddits/all").timeout();
 
         const restoreConsole = mockConsole();
 
         const { queryByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <collegiateSubredditsIndexPage />
+                    <CollegiateSubredditsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -131,7 +131,7 @@ describe("collegiateSubredditsIndexPage tests", () => {
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
 
         const errorMessage = console.error.mock.calls[0][0];
-        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/collegiateSubreddits/all");
+        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/collegiatesubreddits/all");
         restoreConsole();
 
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
@@ -141,14 +141,14 @@ describe("collegiateSubredditsIndexPage tests", () => {
         setupAdminUser();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiateSubreddits/all").reply(200, collegiateSubredditsFixtures.threeCollegiateSubreddits);
-        axiosMock.onDelete("/api/collegiateSubreddits").reply(200, "collegiateSubreddit with id 1 was deleted");
+        axiosMock.onGet("/api/collegiatesubreddits/all").reply(200, collegiateSubredditsFixtures.threeCollegiateSubreddits);
+        axiosMock.onDelete("/api/collegiatesubreddits").reply(200, "CollegiateSubreddit with id 1 was deleted");
 
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <collegiateSubredditsIndexPage />
+                    <CollegiateSubredditsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -163,10 +163,8 @@ describe("collegiateSubredditsIndexPage tests", () => {
        
         fireEvent.click(deleteButton);
 
-        await waitFor(() => { expect(mockToast).toBeCalledWith("collegiateSubreddit with id 1 was deleted") });
+        await waitFor(() => { expect(mockToast).toBeCalledWith("CollegiateSubreddit with id 1 was deleted") });
 
     });
 
 });
-
-
