@@ -161,8 +161,6 @@ describe("EarthquakesIndexPage tests", () => {
 
         expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
 
-        axiosMock.onGet("/api/earthquakes/all").reply(200, []);
-
         const purgeButton = getByTestId('purge-button');
         expect(purgeButton).toBeInTheDocument();
 
