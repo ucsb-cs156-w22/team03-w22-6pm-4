@@ -141,7 +141,12 @@ describe("EarthquakesIndexPage tests", () => {
 
         const queryClient = new QueryClient();
 
-        axiosMock.onGet("/api/earthquakes/all").reply(200, earthquakesFixtures.threeEarthquakes);
+        axiosMock
+            .onGet("/api/earthquakes/all")
+            .replyOnce(200, earthquakesFixtures.threeEarthquakes)
+            .onGet("/api/earthquakes/all")
+            .replyOnce(200, []);
+
         axiosMock.onPost("/api/earthquakes/purge").reply(200);
 
         const { getByTestId } = render(
@@ -165,7 +170,6 @@ describe("EarthquakesIndexPage tests", () => {
 
         await waitFor(() => { expect(mockToast).toBeCalledWith("🔥 Earthquakes purged. 🔥"); });
 
-        // TODO: How to get the table to render again?
-        // await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
     });
 });
