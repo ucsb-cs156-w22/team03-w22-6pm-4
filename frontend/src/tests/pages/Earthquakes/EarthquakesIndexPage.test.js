@@ -137,6 +137,10 @@ describe("EarthquakesIndexPage tests", () => {
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
+    // TODO: This massive block will be a purge 💥 eventually.
+
+    /*
+
     test("test what happens when you click delete, admin", async () => {
         setupAdminUser();
 
@@ -155,18 +159,17 @@ describe("EarthquakesIndexPage tests", () => {
 
         await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
 
-       expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); 
+       expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
 
 
         const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
         expect(deleteButton).toBeInTheDocument();
-       
+
         fireEvent.click(deleteButton);
 
         await waitFor(() => { expect(mockToast).toBeCalledWith("Earthquake with id 1 was deleted") });
 
     });
 
+    */
 });
-
-
