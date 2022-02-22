@@ -74,7 +74,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
 
     });
 
-    test("renders  three collegiateSubreddits without crashing for regular user", async () => {
+    test("renders three subreddits without crashing for regular user", async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/collegiateSubreddits/all").reply(200, collegiateSubredditsFixtures.threeCollegiateSubreddits);
@@ -93,7 +93,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
 
     });
 
-    test("renders  three collegiateSubreddits without crashing for admin user", async () => {
+    test("renders three subreddits without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/collegiateSubreddits/all").reply(200, collegiateSubredditsFixtures.threeCollegiateSubreddits);
@@ -142,7 +142,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
 
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/collegiateSubreddits/all").reply(200, collegiateSubredditsFixtures.threeCollegiateSubreddits);
-        axiosMock.onDelete("/api/collegiateSubreddits").reply(200, "collegiateSubreddit with id 1 was deleted");
+        axiosMock.onDelete("/api/collegiateSubreddits").reply(200, "CollegiateSubreddit with id 1 was deleted");
 
 
         const { getByTestId } = render(
@@ -163,10 +163,8 @@ describe("CollegiateSubredditsIndexPage tests", () => {
 
         fireEvent.click(deleteButton);
 
-        await waitFor(() => { expect(mockToast).toBeCalledWith("collegiateSubreddit with id 1 was deleted") });
+        await waitFor(() => { expect(mockToast).toBeCalledWith("CollegiateSubreddit with id 1 was deleted") });
 
     });
 
 });
-
-
