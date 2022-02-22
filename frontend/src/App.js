@@ -7,16 +7,22 @@ import TodosIndexPage from "main/pages/Todos/TodosIndexPage";
 import TodosCreatePage from "main/pages/Todos/TodosCreatePage";
 import TodosEditPage from "main/pages/Todos/TodosEditPage";
 
+import CollegiateSubredditsIndexPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsIndexPage";
+import CollegiateSubredditsCreatePage from "main/pages/CollegiateSubreddits/CollegiateSubredditsCreatePage";
+import CollegiateSubredditsEditPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsEditPage";
+
 import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
-
 
 import StudentsIndexPage from "main/pages/Students/StudentsIndexPage";
 import StudentsCreatePage from "main/pages/Students/StudentsCreatePage";
 
 import UCSBSubjectsIndexPage from "main/pages/UCSBSubjects/UCSBSubjectsIndexPage";
 import UCSBSubjectsCreatePage from "main/pages/UCSBSubjects/UCSBSubjectsCreatePage";
+
+import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage";
+import EarthquakesCreatePage from "main/pages/Earthquakes/EarthquakesCreatePage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
@@ -64,6 +70,22 @@ function App() {
         {
           hasRole(currentUser, "ROLE_USER") && (
             <>
+              <Route exact path="/collegiateSubreddits/list" element={<CollegiateSubredditsIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/collegiateSubreddits/edit/:id" element={<CollegiateSubredditsEditPage />} />
+              <Route exact path="/collegiateSubreddits/create" element={<CollegiateSubredditsCreatePage />} />
+            </>
+          )
+        }
+
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
               <Route exact path="/ucsbdates/list" element={<UCSBDatesIndexPage />} />
             </>
           )
@@ -88,6 +110,20 @@ function App() {
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
               <Route exact path="/ucsbsubjects/create" element={<UCSBSubjectsCreatePage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/earthquakes/list" element={<EarthquakesIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/earthquakes/retrieve" element={<EarthquakesCreatePage />} />
             </>
           )
         }
