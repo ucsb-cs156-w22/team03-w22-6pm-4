@@ -1,8 +1,31 @@
+import { Button } from 'react-bootstrap';
+
+import { toast } from "react-toastify";
+
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+
 import EarthquakesTable from "main/components/Earthquakes/EarthquakesTable";
 
-import { useBackend } from 'main/utils/useBackend';
+import { useBackend, useBackendMutation } from 'main/utils/useBackend';
 import { useCurrentUser } from 'main/utils/currentUser';
+
+// I don't know what I'm doing.
+// https://stackoverflow.com/questions/66056529/react-error-invalid-hook-call-hooks-can-only-be-called-inside-of-the-body-of/66056689
+
+function PurgeButton()
+{
+  let purge = useBackendMutation(
+    () => ({ url: "/api/earthquakes/purge", method: "POST" }),
+    { onSuccess: () => { toast("🔥 Earthquakes purged. 🔥"); } },
+    ["/api/earthquakes/purge"]
+  );
+
+  return (
+    <Button variant="outline-danger" onClick={ () => { purge.mutate(); } }>
+      Purge earthquakes. 💥
+    </Button>
+  );
+}
 
 export default function EarthquakesIndexPage()
 {
@@ -28,6 +51,7 @@ export default function EarthquakesIndexPage()
         <h1>Earthquakes 🌎</h1>
         <EarthquakesTable earthquakes={properties} currentUser={currentUser} />
       </div>
+    <PurgeButton />
     </BasicLayout>
   )
 }
