@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage";
@@ -23,7 +23,6 @@ jest.mock('react-toastify', () => {
 });
 
 describe("EarthquakesIndexPage tests", () => {
-
     const axiosMock =new AxiosMockAdapter(axios);
 
     const testId = "EarthquakesTable";
@@ -137,17 +136,13 @@ describe("EarthquakesIndexPage tests", () => {
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
-    // TODO: This massive block will be a purge 💥 eventually.
-
-    /*
-
     test("test what happens when you click delete, admin", async () => {
         setupAdminUser();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/earthquakes/all").reply(200, earthquakesFixtures.threeEarthquakes);
-        axiosMock.onDelete("/api/earthquakes").reply(200, "Earthquake with id 1 was deleted");
 
+        axiosMock.onGet("/api/earthquakes/all").reply(200, earthquakesFixtures.threeEarthquakes);
+        axiosMock.onPost("/api/earthquakes/purge").reply(200);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -159,17 +154,18 @@ describe("EarthquakesIndexPage tests", () => {
 
         await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
 
-       expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+        expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
 
+        axiosMock.onGet("/api/earthquakes/all").reply(200, []);
 
-        const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-        expect(deleteButton).toBeInTheDocument();
+        const purgeButton = getByTestId('purge-button');
+        expect(purgeButton).toBeInTheDocument();
 
-        fireEvent.click(deleteButton);
+        fireEvent.click(purgeButton);
 
-        await waitFor(() => { expect(mockToast).toBeCalledWith("Earthquake with id 1 was deleted") });
+        await waitFor(() => { expect(mockToast).toBeCalledWith("🔥 Earthquakes purged. 🔥"); });
 
+        // TODO: How to get the table to render again?
+        // await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
     });
-
-    */
 });

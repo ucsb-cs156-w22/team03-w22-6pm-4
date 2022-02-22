@@ -21,7 +21,7 @@ function PurgeButton()
   );
 
   return (
-    <Button variant="outline-danger" onClick={ () => { purge.mutate(); } }>
+    <Button variant="outline-danger" onClick={ () => { purge.mutate(); } } data-testid="purge-button">
       Purge earthquakes. 💥
     </Button>
   );
@@ -49,9 +49,9 @@ export default function EarthquakesIndexPage()
     <BasicLayout>
       <div className="pt-2">
         <h1>Earthquakes 🌎</h1>
-        <EarthquakesTable earthquakes={properties} currentUser={currentUser} />
+        <EarthquakesTable earthquakes={properties} currentUser={currentUser}/>
+        <PurgeButton/>
       </div>
-    <PurgeButton />
     </BasicLayout>
   )
 }
