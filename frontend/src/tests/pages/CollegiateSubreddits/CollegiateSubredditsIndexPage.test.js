@@ -26,7 +26,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
 
-    const testId = "collegiateSubredditsTable";
+    const testId = "CollegiateSubredditsTable";
 
     const setupUserOnly = () => {
         axiosMock.reset();
