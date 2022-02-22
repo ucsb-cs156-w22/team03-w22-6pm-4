@@ -73,13 +73,11 @@ describe("EarthquakesCreatePage tests", () => {
         );
 
         await waitFor(() => {
-            expect(getByTestId("EarthquakeForm-title")).toBeInTheDocument();
+            expect(getByTestId("EarthquakeForm-distance")).toBeInTheDocument();
         });
 
-        const titleField = getByTestId("EarthquakeForm-title");
+        const titleField = getByTestId("EarthquakeForm-distance");
         const magField = getByTestId("EarthquakeForm-mag");
-        const placeField = getByTestId("EarthquakeForm-place");
-        const timeField = getByTestId("EarthquakeForm-time");
         const submitButton = getByTestId("EarthquakeForm-submit");
 
         fireEvent.change(titleField, { target: { value: 'a' } });

@@ -5,6 +5,7 @@ import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import CollegiateSubredditsTable from 'main/components/CollegiateSubreddits/CollegiateSubredditsTable';
 import { useCurrentUser } from 'main/utils/currentUser'
 
+
 export default function CollegiateSubredditsIndexPage() {
 
   const currentUser = useCurrentUser();
@@ -14,6 +15,8 @@ export default function CollegiateSubredditsIndexPage() {
       // Stryker disable next-line all : don't test internal caching of React Query
       ["/api/collegiatesubreddits/all"],
       { method: "GET", url: "/api/collegiatesubreddits/all" },
+      //["/api/collegiateSubreddits/all"],
+      //{ method: "GET", url: "/api/collegiateSubreddits/all" },
       []
     );
 
