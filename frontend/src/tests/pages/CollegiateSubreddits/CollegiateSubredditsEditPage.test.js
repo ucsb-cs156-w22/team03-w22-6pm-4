@@ -43,7 +43,7 @@ describe("CollegiateSubredditsEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/collegiatesubreddits", { params: { id: 17 } }).timeout();
+            axiosMock.onGet("/api/collegiateSubreddits", { params: { id: 17 } }).timeout();
         });
 
         const queryClient = new QueryClient();
@@ -69,13 +69,13 @@ describe("CollegiateSubredditsEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/collegiatesubreddits", { params: { id: 17 } }).reply(200, {
+            axiosMock.onGet("/api/collegiateSubreddits", { params: { id: 17 } }).reply(200, {
                 id: 17,
                 name: "a",
                 location: "b",
                 subreddit: "c"
             });
-            axiosMock.onPut('/api/collegiatesubreddits').reply(200, {
+            axiosMock.onPut('/api/collegiateSubreddits').reply(200, {
                 id: 17,
                 name: "d",
                 location: "e",
@@ -153,7 +153,7 @@ describe("CollegiateSubredditsEditPage tests", () => {
 
             await waitFor(() => expect(mockToast).toBeCalled);
             expect(mockToast).toBeCalledWith("CollegiateSubreddit Updated - id: 17 name: d");
-            expect(mockNavigate).toBeCalledWith({ "to": "/collegiatesubreddits/list" });
+            expect(mockNavigate).toBeCalledWith({ "to": "/collegiateSubreddits/list" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });

@@ -60,7 +60,7 @@ describe("CollegiateSubredditsCreatePage tests", () => {
             subreddit: "c",
         };
 
-        axiosMock.onPost("/api/collegiatesubreddits/post").reply( 202, collegiateSubreddit );
+        axiosMock.onPost("/api/collegiateSubreddits/post").reply( 202, collegiateSubreddit );
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -97,7 +97,7 @@ describe("CollegiateSubredditsCreatePage tests", () => {
         });
 
         expect(mockToast).toBeCalledWith("New collegiateSubreddit Created - id: 17 name: a");
-        expect(mockNavigate).toBeCalledWith({ "to": "/collegiatesubreddits/list" });
+        expect(mockNavigate).toBeCalledWith({ "to": "/collegiateSubreddits/list" });
     });
 
 
