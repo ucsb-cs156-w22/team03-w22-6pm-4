@@ -16,7 +16,9 @@ function PurgeButton()
 {
   let purge = useBackendMutation(
     () => ({ url: "/api/earthquakes/purge", method: "POST" }),
-    { onSuccess: () => { toast("🔥 Earthquakes purged. 🔥"); } }
+    { onSuccess: () => { toast("🔥 Earthquakes purged. 🔥"); } },
+    // Stryker disable next-line all : don't test internal caching of React Query
+    ["get_earthquakes"],
   );
 
   return (
@@ -33,7 +35,7 @@ export default function EarthquakesIndexPage()
   const { data: earthquakes, error: _error, status: _status } =
     useBackend(
       // Stryker disable next-line all : don't test internal caching of React Query
-      ["/api/earthquakes/all"],
+      ["get_earthquakes"],
       { method: "GET", url: "/api/earthquakes/all" },
       []
     );

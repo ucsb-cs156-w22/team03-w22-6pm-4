@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage";
@@ -149,7 +149,7 @@ describe("EarthquakesIndexPage tests", () => {
 
         axiosMock.onPost("/api/earthquakes/purge").reply(200);
 
-        const { getByTestId } = render(
+        const { getByTestId, queryByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <EarthquakesIndexPage />
@@ -168,6 +168,6 @@ describe("EarthquakesIndexPage tests", () => {
 
         await waitFor(() => { expect(mockToast).toBeCalledWith("🔥 Earthquakes purged. 🔥"); });
 
-        // await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
+        await waitFor(() => { expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
     });
 });
