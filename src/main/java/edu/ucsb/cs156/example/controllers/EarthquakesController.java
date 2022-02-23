@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@Api(description = "Information about recent earthquakes.")
+@Api(description = "Information about earthquakes recorded by USGS.")
 @RequestMapping("/api/earthquakes")
 public class EarthquakesController extends ApiController
 {
@@ -58,7 +58,7 @@ public class EarthquakesController extends ApiController
     }
 
     @PostMapping("/retrieve")
-    @ApiOperation(value = "Store recent earthquakes.", notes = "Delegate to the query service from team01. Only accessible to administrators. Beware duplicates.")
+    @ApiOperation(value = "Store earthquakes.", notes = "Delegate to the query service from team01. Only accessible to administrators. Beware duplicates.")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Iterable<Feature> upsert(
         // Why are these parameters strings? I don't understand why the querier mandates that.

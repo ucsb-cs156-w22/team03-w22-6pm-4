@@ -2,7 +2,6 @@ import React from "react";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 // import { toast } from "react-toastify";
 import { useBackendMutation } from "main/utils/useBackend";
-import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/EarthquakeUtils"
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
@@ -21,7 +20,7 @@ export default function EarthquakesTable({ earthquakes, currentUser }) {
         //{ onSuccess: onDeleteSuccess },
         //["/api/earthquakes/all"]
     //);
-    //// Stryker enable all 
+    //// Stryker enable all
 
     //// ssStryker isable next-line all : TODO try to make a good test for this
     ////const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
@@ -54,7 +53,7 @@ export default function EarthquakesTable({ earthquakes, currentUser }) {
     if (hasRole(currentUser, "ROLE_ADMIN")) {
         //columns.push(ButtonColumn("Edit", "primary", editCallback, "EarthquakesTable"));
         //columns.push(ButtonColumn("Delete", "danger", deleteCallback, "EarthquakesTable"));
-    } 
+    }
 
     // Stryker disable next-line ArrayDeclaration : [columns] is a performance optimization
     const memoizedColumns = React.useMemo(() => columns, [columns]);

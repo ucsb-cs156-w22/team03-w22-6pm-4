@@ -23,7 +23,6 @@ jest.mock('react-toastify', () => {
 });
 
 describe("EarthquakesIndexPage tests", () => {
-
     const axiosMock =new AxiosMockAdapter(axios);
 
     const testId = "EarthquakesTable";
@@ -137,19 +136,20 @@ describe("EarthquakesIndexPage tests", () => {
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
-    // TODO: This massive block will be a purge 💥 eventually.
-
-    /*
-
     test("test what happens when you click delete, admin", async () => {
         setupAdminUser();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/earthquakes/all").reply(200, earthquakesFixtures.threeEarthquakes);
-        axiosMock.onDelete("/api/earthquakes").reply(200, "Earthquake with id 1 was deleted");
 
+        axiosMock
+            .onGet("/api/earthquakes/all")
+            .replyOnce(200, earthquakesFixtures.threeEarthquakes)
+            .onGet("/api/earthquakes/all")
+            .replyOnce(200, []);
 
-        const { getByTestId } = render(
+        axiosMock.onPost("/api/earthquakes/purge").reply(200);
+
+        const { getByTestId, queryByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <EarthquakesIndexPage />
@@ -159,17 +159,15 @@ describe("EarthquakesIndexPage tests", () => {
 
         await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
 
-       expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+        expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
 
+        const purgeButton = getByTestId('purge-button');
+        expect(purgeButton).toBeInTheDocument();
 
-        const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-        expect(deleteButton).toBeInTheDocument();
+        fireEvent.click(purgeButton);
 
-        fireEvent.click(deleteButton);
+        await waitFor(() => { expect(mockToast).toBeCalledWith("🔥 Earthquakes purged. 🔥"); });
 
-        await waitFor(() => { expect(mockToast).toBeCalledWith("Earthquake with id 1 was deleted") });
-
+        await waitFor(() => { expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
     });
-
-    */
 });
