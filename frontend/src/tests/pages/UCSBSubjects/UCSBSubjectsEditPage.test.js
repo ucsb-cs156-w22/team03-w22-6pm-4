@@ -126,7 +126,7 @@ describe("UCSBSubjectsEditPage tests", () => {
             expect(collegeCodeField).toHaveValue("UCSB");
             expect(deptCodeField).toHaveValue("GPS");
             expect(relatedDeptCodeField).toHaveValue("GPS");
-            expect(inactiveField).toHaveValue(false);
+            expect(inactiveField).toHaveValue("false");
         });
 
         test("Changes when you click Update", async () => {
@@ -158,7 +158,7 @@ describe("UCSBSubjectsEditPage tests", () => {
             expect(collegeCodeField).toHaveValue("UCSB");
             expect(deptCodeField).toHaveValue("GPS");
             expect(relatedDeptCodeField).toHaveValue("GPS");
-            expect(inactiveField).toHaveValue(false);
+            expect(inactiveField).toHaveValue("false");
             expect(submitButton).toBeInTheDocument();
 
             fireEvent.change(subjectCodeField, { target: { value: 'ENGL' } })
@@ -171,7 +171,7 @@ describe("UCSBSubjectsEditPage tests", () => {
 
             await waitFor(() => expect(mockToast).toBeCalled);
             expect(mockToast).toBeCalledWith("UCSBSubjects Updated - id: 17 subjectCode: ENGL");
-            expect(mockNavigate).toBeCalledWith({ "to": "/ucsbsubjects/list" });
+            expect(mockNavigate).toBeCalledWith({ "to": "/UCSBSubjects/list" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });

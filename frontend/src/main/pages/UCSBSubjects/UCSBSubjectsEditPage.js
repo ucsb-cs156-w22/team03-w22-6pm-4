@@ -65,7 +65,7 @@ export default function UCSBSubjectsEditPage() {
       <div className="pt-2">
         <h1>Edit UCSBSubjects</h1>
         {ucsbSubjects &&
-          <UCSBSubjectsForm initialUCSBSubjects={ucsbSubjects} submitAction={onSubmit} buttonLabel="Update" />
+          <UCSBSubjectsForm initialUCSBSubject={ucsbSubjects} submitAction={onSubmit} buttonLabel="Update" />
         }
       </div>
     </BasicLayout>
