@@ -16,8 +16,7 @@ function PurgeButton()
 {
   let purge = useBackendMutation(
     () => ({ url: "/api/earthquakes/purge", method: "POST" }),
-    { onSuccess: () => { toast("🔥 Earthquakes purged. 🔥"); } },
-    ["/api/earthquakes/purge"]
+    { onSuccess: () => { toast("🔥 Earthquakes purged. 🔥"); } }
   );
 
   return (
