@@ -20,7 +20,9 @@ export default function UCSBSubjectsCreatePage() {
   });
 
   const onSuccess = (ucsbSubjects) => {
-    toast(`New ucsbSubjects Created - id: ${ucsbSubjects.id} subjectCode: ${ucsbSubjects.subjectCode}`);
+
+    toast(`New UCSBSubjects Created - id: ${ucsbSubjects.id} subjectCode: ${ucsbSubjects.subjectCode}`);
+
   }
 
   const mutation = useBackendMutation(
