@@ -105,7 +105,7 @@ describe("UCSBSubjectsCreatePage tests", () => {
             "collegeCode": "UCSB",
             "deptCode": "GPS",
             "relatedDeptCode": "GPS",
-            "inactive": false
+            "inactive":"false"
         });
 
         expect(mockToast).toBeCalledWith("New ucsbSubjects Created - id: 17 subjectCode: GPS");
