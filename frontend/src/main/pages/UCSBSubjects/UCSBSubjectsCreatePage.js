@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 export default function UCSBSubjectsCreatePage() {
   const objectToAxiosParams = (ucsbSubjects) => ({
-    url: "/api/ucsbsubjects/post",
+    url: "/api/UCSBSubjects/post",
     method: "POST",
     params: {
       subjectCode: ucsbSubjects.subjectCode,
@@ -20,14 +20,14 @@ export default function UCSBSubjectsCreatePage() {
   });
 
   const onSuccess = (ucsbSubjects) => {
-    toast(`New ucsbSubjects Created - id: ${ucsbSubjects.id} subjectCode: ${ucsbSubjects.subjectCode}`);
+    toast(`New UCSBSubjects Created - id: ${ucsbSubjects.id} subjectCode: ${ucsbSubjects.subjectCode}`);
   }
 
   const mutation = useBackendMutation(
     objectToAxiosParams,
      { onSuccess }, 
      // Stryker disable next-line all : hard to set up test for caching
-     ["/api/ucsbSubjects/all"]
+     ["/api/UCSBSubjects/all"]
      );
 
      const { isSuccess } = mutation
@@ -37,7 +37,7 @@ export default function UCSBSubjectsCreatePage() {
      }
    
      if (isSuccess) {
-       return <Navigate to="/ucsbsubjects/list" />
+       return <Navigate to="/UCSBSubjects/list" />
      }
     return (
       <BasicLayout>
