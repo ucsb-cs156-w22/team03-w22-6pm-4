@@ -105,6 +105,7 @@ describe("UCSBSubjectsCreatePage tests", () => {
             "collegeCode": "UCSB",
             "deptCode": "GPS",
             "relatedDeptCode": "GPS",
+
             "inactive":"false"
         });
 
