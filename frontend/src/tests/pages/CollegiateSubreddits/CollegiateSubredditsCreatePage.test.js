@@ -53,14 +53,14 @@ describe("CollegiateSubredditsCreatePage tests", () => {
     test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
 
         const queryClient = new QueryClient();
-        const subreddit = {
+        const collegiateSubreddit = {
             id: 17,
             name: "a",
             location: "b",
             subreddit: "c",
         };
 
-        axiosMock.onPost("/api/collegiateSubreddits/post").reply( 202, subreddit );
+        axiosMock.onPost("/api/collegiateSubreddits/post").reply( 202, collegiateSubreddit );
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -71,13 +71,13 @@ describe("CollegiateSubredditsCreatePage tests", () => {
         );
 
         await waitFor(() => {
-            expect(getByTestId("collegiateSubredditForm-name")).toBeInTheDocument();
+            expect(getByTestId("CollegiateSubredditForm-name")).toBeInTheDocument();
         });
 
-        const nameField = getByTestId("collegiateSubredditForm-name");
-        const locationField = getByTestId("collegiateSubredditForm-location");
-        const subredditField = getByTestId("collegiateSubredditForm-subreddit");
-        const submitButton = getByTestId("collegiateSubredditForm-submit");
+        const nameField = getByTestId("CollegiateSubredditForm-name");
+        const locationField = getByTestId("CollegiateSubredditForm-location");
+        const subredditField = getByTestId("CollegiateSubredditForm-subreddit");
+        const submitButton = getByTestId("CollegiateSubredditForm-submit");
 
         fireEvent.change(nameField, { target: { value: 'a' } });
         fireEvent.change(locationField, { target: { value: 'b' } });
@@ -96,7 +96,7 @@ describe("CollegiateSubredditsCreatePage tests", () => {
             "subreddit": "c"
         });
 
-        expect(mockToast).toBeCalledWith("New subreddit Created - id: 17 name: a");
+        expect(mockToast).toBeCalledWith("New collegiateSubreddit Created - id: 17 name: a");
         expect(mockNavigate).toBeCalledWith({ "to": "/collegiateSubreddits/list" });
     });
 

@@ -55,8 +55,8 @@ describe("CollegiateSubredditsEditPage tests", () => {
                     </MemoryRouter>
                 </QueryClientProvider>
             );
-            await waitFor(() => expect(getByText("Edit collegiateSubreddit")).toBeInTheDocument());
-            expect(queryByTestId("collegiateSubredditForm-name")).not.toBeInTheDocument();
+            await waitFor(() => expect(getByText("Edit CollegiateSubreddit")).toBeInTheDocument());
+            expect(queryByTestId("CollegiateSubredditForm-name")).not.toBeInTheDocument();
         });
     });
 
@@ -73,13 +73,13 @@ describe("CollegiateSubredditsEditPage tests", () => {
                 id: 17,
                 name: "a",
                 location: "b",
-                subreddit: "c",
+                subreddit: "c"
             });
             axiosMock.onPut('/api/collegiateSubreddits').reply(200, {
                 id: 17,
-                name: "a",
-                location: "b",
-                subreddit: "c",
+                name: "d",
+                location: "e",
+                subreddit: "f"
             });
         });
 
@@ -104,13 +104,13 @@ describe("CollegiateSubredditsEditPage tests", () => {
                 </QueryClientProvider>
             );
 
-            await waitFor(() => expect(getByTestId("collegiateSubredditForm-name")).toBeInTheDocument());
+            await waitFor(() => expect(getByTestId("CollegiateSubredditForm-name")).toBeInTheDocument());
 
-            const idField = getByTestId("collegiateSubredditForm-id");
-            const nameField = getByTestId("collegiateSubredditForm-name");
-            const locationField = getByTestId("collegiateSubredditForm-location");
-            const subredditField = getByTestId("collegiateSubredditForm-subreddit");
-            const submitButton = getByTestId("collegiateSubredditForm-submit");
+            const idField = getByTestId("CollegiateSubredditForm-id");
+            const nameField = getByTestId("CollegiateSubredditForm-name");
+            const locationField = getByTestId("CollegiateSubredditForm-location");
+            const subredditField = getByTestId("CollegiateSubredditForm-subreddit");
+            const submitButton = getByTestId("CollegiateSubredditForm-submit");
 
             expect(idField).toHaveValue("17");
             expect(nameField).toHaveValue("a");
@@ -130,13 +130,13 @@ describe("CollegiateSubredditsEditPage tests", () => {
                 </QueryClientProvider>
             );
 
-            await waitFor(() => expect(getByTestId("collegiateSubredditForm-name")).toBeInTheDocument());
+            await waitFor(() => expect(getByTestId("CollegiateSubredditForm-name")).toBeInTheDocument());
 
-            const idField = getByTestId("collegiateSubredditForm-id");
-            const nameField = getByTestId("collegiateSubredditForm-name");
-            const locationField = getByTestId("collegiateSubredditForm-location");
-            const subredditField = getByTestId("collegiateSubredditForm-subreddit");
-            const submitButton = getByTestId("collegiateSubredditForm-submit");
+            const idField = getByTestId("CollegiateSubredditForm-id");
+            const nameField = getByTestId("CollegiateSubredditForm-name");
+            const locationField = getByTestId("CollegiateSubredditForm-location");
+            const subredditField = getByTestId("CollegiateSubredditForm-subreddit");
+            const submitButton = getByTestId("CollegiateSubredditForm-submit");
 
             expect(idField).toHaveValue("17");
             expect(nameField).toHaveValue("a");
@@ -152,7 +152,7 @@ describe("CollegiateSubredditsEditPage tests", () => {
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled);
-            expect(mockToast).toBeCalledWith("collegiateSubreddit Updated - id: 17 name: d");
+            expect(mockToast).toBeCalledWith("CollegiateSubreddit Updated - id: 17 name: d");
             expect(mockNavigate).toBeCalledWith({ "to": "/collegiateSubreddits/list" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
@@ -168,5 +168,3 @@ describe("CollegiateSubredditsEditPage tests", () => {
        
     });
 });
-
-
