@@ -34,7 +34,7 @@ jest.mock('react-router-dom', () => {
 
 describe("UCSBSubjectsEditPage tests", () => {
 
-    describe("when the backend doesn't return a todo", () => {
+    describe("when the backend doesn't return a subject", () => {
 
         const axiosMock = new AxiosMockAdapter(axios);
 
@@ -79,13 +79,13 @@ describe("UCSBSubjectsEditPage tests", () => {
                 inactive: false
             });
             axiosMock.onPut('/api/UCSBSubjects').reply(200, {
-                id: "17",
+                id: 17,
                 subjectCode: "ENGL",
                 subjectTranslation: "English",
                 collegeCode: "UCSB",
                 deptCode: "ENGL",
                 relatedDeptCode: "ENGL",
-                inactive: false
+                inactive: true
             });
         });
 
@@ -166,7 +166,7 @@ describe("UCSBSubjectsEditPage tests", () => {
             fireEvent.change(collegeCodeField, { target: { value: 'UCSB' } })
             fireEvent.change(deptCodeField, { target: { value: 'ENGL' } })
             fireEvent.change(relatedDeptCodeField, { target: { value: 'ENGL' } })
-            fireEvent.change(inactiveField, { target: { value: false } })
+            fireEvent.change(inactiveField, { target: { value: 'true' } })
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled);
@@ -178,10 +178,10 @@ describe("UCSBSubjectsEditPage tests", () => {
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
                 subjectCode: 'ENGL',
                 subjectTranslation: "English",
-                CollegeCode: "UCSB",
+                collegeCode: "UCSB",
                 deptCode: "ENGL",
                 relatedDeptCode: "ENGL",
-                inactive: false
+                inactive: 'true'
             })); // posted object
 
         });
