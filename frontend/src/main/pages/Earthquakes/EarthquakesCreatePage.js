@@ -16,27 +16,32 @@ export default function EarthquakesCreatePage() {
     method: "POST",
     params: {
         distance: earthquake.distanceKm,
-        mag: earthquake.minMagnitude
+        magnitude: earthquake.minMagnitude
+
     }
   });
 
   const onSuccess = (earthquake) => {
     toast(`Search completed for earthquakes within ${earthquake.distanceKm} kilometers and with a magnitude of no more than ${earthquake.minMagnitude}`);
   }
-
+  
+  /*
   useBackend(
     // Stryker disable next-line all : don't test internal caching of React Query
     ["/api/earthquakes/retrieve"],
     { method: "POST", url: "/api/earthquakes/retrieve" },
     []
   );
-
+  */
+  
+    
   const mutation = useBackendMutation(
     objectToAxiosParams,
      { onSuccess }, 
      // Stryker disable next-line all : hard to set up test for caching
      ["/api/earthquakes/retrieve"]
      );
+     
 
   const { isSuccess } = mutation
 
