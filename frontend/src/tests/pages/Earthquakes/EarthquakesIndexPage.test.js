@@ -170,4 +170,20 @@ describe("EarthquakesIndexPage tests", () => {
 
         await waitFor(() => { expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
     });
+
+    test("there should be no purge button as a user", async () => {
+        setupUserOnly();
+
+        const queryClient = new QueryClient();
+
+        const { queryByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <EarthquakesIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        expect(queryByTestId('purge-button')).not.toBeInTheDocument();
+    });
 });
