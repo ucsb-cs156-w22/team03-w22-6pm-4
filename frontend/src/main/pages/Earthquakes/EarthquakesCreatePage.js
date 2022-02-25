@@ -15,15 +15,16 @@ export default function EarthquakesCreatePage() {
     url: "/api/earthquakes/retrieve",
     method: "POST",
     params: {
-        distance: earthquake.distanceKm,
-        magnitude: earthquake.minMagnitude
+        distance: earthquake.distance,
+        magnitude: earthquake.mag
 
     }
   });
 
-  const onSuccess = (earthquake) => {
-    toast(`Search completed for earthquakes within ${earthquake.distanceKm} kilometers and with a magnitude of no more than ${earthquake.minMagnitude}`);
-  }
+  const onSuccess = (earthquake) => { 
+    console.log(earthquake);
+    toast(`${earthquake.length} Earthquakes retrieved`);
+  };
   
   /*
   useBackend(
@@ -47,11 +48,11 @@ export default function EarthquakesCreatePage() {
 
   const onSubmit = async (data) => {
     mutation.mutate(data);
-  }
+  };
 
   if (isSuccess) {
     return <Navigate to="/earthquakes/list" />
-  }
+  };
 
   return (
     <BasicLayout>
@@ -62,5 +63,5 @@ export default function EarthquakesCreatePage() {
 
       </div>
     </BasicLayout>
-  )
+  );
 }

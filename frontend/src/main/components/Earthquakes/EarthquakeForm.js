@@ -30,7 +30,7 @@ function EarthquakeForm({ initialEarthquake, submitAction, buttonLabel="Retrieve
     return (
 
         <Form onSubmit={handleSubmit(submitAction)}>
-
+            {initialEarthquake}
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="distance">Distance</Form.Label>
                 <Form.Control

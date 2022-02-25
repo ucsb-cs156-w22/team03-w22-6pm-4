@@ -62,8 +62,9 @@ public class EarthquakesController extends ApiController
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Iterable<Feature> upsert(
         // Why are these parameters strings? I don't understand why the querier mandates that.
-        @ApiParam("Minimum magnitude.") @RequestParam String magnitude,
-        @ApiParam("Distance from Storke.") @RequestParam String distance
+        @ApiParam("Distance from Storke.") @RequestParam String distance,
+        @ApiParam("Minimum magnitude.") @RequestParam String magnitude
+
     ) throws JsonProcessingException {
         Features features = querier.getJSON(distance, magnitude);
 
