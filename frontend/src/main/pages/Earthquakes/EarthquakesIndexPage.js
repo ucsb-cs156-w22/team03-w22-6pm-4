@@ -6,11 +6,8 @@ import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 
 import EarthquakesTable from "main/components/Earthquakes/EarthquakesTable";
 
+import { hasRole, useCurrentUser } from "main/utils/currentUser";
 import { useBackend, useBackendMutation } from 'main/utils/useBackend';
-import { useCurrentUser } from 'main/utils/currentUser';
-
-// I don't know what I'm doing.
-// https://stackoverflow.com/questions/66056529/react-error-invalid-hook-call-hooks-can-only-be-called-inside-of-the-body-of/66056689
 
 function PurgeButton()
 {
@@ -21,11 +18,18 @@ function PurgeButton()
     ["get_earthquakes"],
   );
 
-  return (
-    <Button variant="outline-danger" onClick={ () => { purge.mutate(); } } data-testid="purge-button">
-      Purge earthquakes. 💥
-    </Button>
-  );
+  const { data: currentUser } = useCurrentUser();
+
+  if (hasRole(currentUser, "ROLE_ADMIN")) {
+    return (
+      <Button variant="outline-danger" onClick={ () => { purge.mutate(); } } data-testid="purge-button">
+        Purge earthquakes. 💥
+      </Button>
+    );
+  }
+
+  // Do not render the button if the user is not an administrator.
+  return null;
 }
 
 export default function EarthquakesIndexPage()
