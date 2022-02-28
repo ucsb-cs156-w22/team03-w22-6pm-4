@@ -25,17 +25,17 @@ describe("EarthquakeForm tests", () => {
     });
 
 
-    test("renders correctly when passing in a Earthquake ", async () => {
+    //test("renders correctly when passing in a Earthquake ", async () => {
 
-        const { getByText, getByTestId } = render(
-            <Router  >
-                <EarthquakeForm initialEarthquake={earthquakesFixtures.oneEarthquake} />
-            </Router>
-        );
-        await waitFor(() => expect(getByTestId(/EarthquakeForm-mag/)).toBeInTheDocument());
-        expect(getByText(/Minimum Magnitude/)).toBeInTheDocument();
-        expect(getByTestId(/EarthquakeForm-mag/)).toHaveValue("2.16");
-    });
+        //const { getByText, getByTestId } = render(
+            //<Router  >
+                //<EarthquakeForm initialEarthquake={earthquakesFixtures.oneEarthquake} />
+            //</Router>
+        //);
+        //await waitFor(() => expect(getByTestId(/EarthquakeForm-mag/)).toBeInTheDocument());
+        //expect(getByText(/Minimum Magnitude/)).toBeInTheDocument();
+        //expect(getByTestId(/EarthquakeForm-mag/)).toHaveValue("2.16");
+    //});
 
 /* Won't get used since no specific format
 
