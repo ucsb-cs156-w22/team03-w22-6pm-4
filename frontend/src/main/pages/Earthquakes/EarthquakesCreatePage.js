@@ -22,7 +22,6 @@ export default function EarthquakesCreatePage() {
   });
 
   const onSuccess = (earthquake) => { 
-    console.log(earthquake);
     toast(`${earthquake.length} Earthquakes retrieved`);
   };
   
