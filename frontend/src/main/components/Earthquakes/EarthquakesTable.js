@@ -50,10 +50,10 @@ export default function EarthquakesTable({ earthquakes, currentUser }) {
         }
     ];
 
-    if (hasRole(currentUser, "ROLE_ADMIN")) {
+    //if (hasRole(currentUser, "ROLE_ADMIN")) {
         //columns.push(ButtonColumn("Edit", "primary", editCallback, "EarthquakesTable"));
         //columns.push(ButtonColumn("Delete", "danger", deleteCallback, "EarthquakesTable"));
-    }
+    //}
 
     // Stryker disable next-line ArrayDeclaration : [columns] is a performance optimization
     const memoizedColumns = React.useMemo(() => columns, [columns]);
