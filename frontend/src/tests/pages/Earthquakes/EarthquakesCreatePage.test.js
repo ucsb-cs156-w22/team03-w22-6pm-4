@@ -5,6 +5,7 @@ import { MemoryRouter } from "react-router-dom";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import { earthquakesFixtures } from "fixtures/earthquakesFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
@@ -48,6 +49,21 @@ describe("EarthquakesCreatePage tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
+    });
+
+    test("renders one Earthquake without crashing for regular user", async () => {
+        //setupUserOnly();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/earthquakes/retrieve").reply(200, earthquakesFixtures.oneEarthquake);
+
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <EarthquakesCreatePage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
     });
 
     test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
