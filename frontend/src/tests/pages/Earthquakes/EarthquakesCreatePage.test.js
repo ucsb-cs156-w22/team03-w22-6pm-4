@@ -54,13 +54,10 @@ describe("EarthquakesCreatePage tests", () => {
 
         const queryClient = new QueryClient();
         const earthquake = {
-            id: 1,
-            title: 'M 2.2 - 10km ESE of Ojai, CA',
-            mag: 2.16,
-            place: '10km ESE of Ojai, CA',
-            time: 1644571919000
+            distance: 30,
+            mag: 1.2,
+            length: 1
         };
-
 
         axiosMock.onPost("/api/earthquakes/retrieve").reply( 202, earthquake );
 
@@ -76,14 +73,12 @@ describe("EarthquakesCreatePage tests", () => {
             expect(getByTestId("EarthquakeForm-distance")).toBeInTheDocument();
         });
 
-        const titleField = getByTestId("EarthquakeForm-distance");
-        const magField = getByTestId("EarthquakeForm-mag");
+        const distanceField = getByTestId("EarthquakeForm-distance");
+        const magnitudeField = getByTestId("EarthquakeForm-mag");
         const submitButton = getByTestId("EarthquakeForm-Retrieve");
 
-        fireEvent.change(titleField, { target: { value: 'a' } });
-        fireEvent.change(magField, { target: { value: '10.0' } });
-        fireEvent.change(placeField, { target: { value: 'b' } });
-        fireEvent.change(timeField, { target: { value: '0' } });
+        fireEvent.change(distanceField, { target: { value: '30' } });
+        fireEvent.change(magnitudeField, { target: { value: '1.2' } });
 
         expect(submitButton).toBeInTheDocument();
 
@@ -93,13 +88,11 @@ describe("EarthquakesCreatePage tests", () => {
 
         expect(axiosMock.history.post[0].params).toEqual(
             {
-            title: 'a',
-            mag: 10.0,
-            place: 'b',
-            time: 0
+            "distance": "30",
+            "magnitude": "1.2",
         });
 
-        expect(mockToast).toBeCalledWith("New earthquake Created - id: 17 title: a");
+        expect(mockToast).toBeCalledWith("1 Earthquakes retrieved");
         expect(mockNavigate).toBeCalledWith({ "to": "/earthquakes/list" });
     });
 
