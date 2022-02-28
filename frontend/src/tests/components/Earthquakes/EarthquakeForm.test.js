@@ -66,8 +66,8 @@ describe("EarthquakeForm tests", () => {
                 <EarthquakeForm />
             </Router>
         );
-        await waitFor(() => expect(getByTestId("EarthquakeForm-submit")).toBeInTheDocument());
-        const submitButton = getByTestId("EarthquakeForm-submit");
+        await waitFor(() => expect(getByTestId("EarthquakeForm-Retrieve")).toBeInTheDocument());
+        const submitButton = getByTestId("EarthquakeForm-Retrieve");
 
         fireEvent.click(submitButton);
 
@@ -90,7 +90,7 @@ describe("EarthquakeForm tests", () => {
 
         const distanceField = getByTestId("EarthquakeForm-distance");
         const magField = getByTestId("EarthquakeForm-mag");
-        const submitButton = getByTestId("EarthquakeForm-submit");
+        const submitButton = getByTestId("EarthquakeForm-Retrieve");
 
         fireEvent.change(distanceField, { target: { value: '1.1' } });
         fireEvent.change(magField, { target: { value: '2.2' } });

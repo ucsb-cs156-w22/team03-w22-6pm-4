@@ -62,7 +62,7 @@ describe("EarthquakesCreatePage tests", () => {
         };
 
 
-        axiosMock.onPost("/api/earthquakes/post").reply( 202, earthquake );
+        axiosMock.onPost("/api/earthquakes/retrieve").reply( 202, earthquake );
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -78,7 +78,7 @@ describe("EarthquakesCreatePage tests", () => {
 
         const titleField = getByTestId("EarthquakeForm-distance");
         const magField = getByTestId("EarthquakeForm-mag");
-        const submitButton = getByTestId("EarthquakeForm-submit");
+        const submitButton = getByTestId("EarthquakeForm-Retrieve");
 
         fireEvent.change(titleField, { target: { value: 'a' } });
         fireEvent.change(magField, { target: { value: '10.0' } });
