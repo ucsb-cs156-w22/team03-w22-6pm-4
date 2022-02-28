@@ -5,6 +5,7 @@ import { MemoryRouter } from "react-router-dom";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import { earthquakesFixtures } from "fixtures/earthquakesFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
@@ -50,19 +51,31 @@ describe("EarthquakesCreatePage tests", () => {
         );
     });
 
+    test("renders one Earthquake without crashing for regular user", async () => {
+        //setupUserOnly();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/earthquakes/retrieve").reply(200, earthquakesFixtures.oneEarthquake);
+
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <EarthquakesCreatePage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+    });
+
     test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
 
         const queryClient = new QueryClient();
         const earthquake = {
-            id: 1,
-            title: 'M 2.2 - 10km ESE of Ojai, CA',
-            mag: 2.16,
-            place: '10km ESE of Ojai, CA',
-            time: 1644571919000
+            distance: 30,
+            mag: 1.2,
+            length: 1
         };
 
-
-        axiosMock.onPost("/api/earthquakes/post").reply( 202, earthquake );
+        axiosMock.onPost("/api/earthquakes/retrieve").reply( 202, earthquake );
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -76,14 +89,12 @@ describe("EarthquakesCreatePage tests", () => {
             expect(getByTestId("EarthquakeForm-distance")).toBeInTheDocument();
         });
 
-        const titleField = getByTestId("EarthquakeForm-distance");
-        const magField = getByTestId("EarthquakeForm-mag");
-        const submitButton = getByTestId("EarthquakeForm-submit");
+        const distanceField = getByTestId("EarthquakeForm-distance");
+        const magnitudeField = getByTestId("EarthquakeForm-mag");
+        const submitButton = getByTestId("EarthquakeForm-Retrieve");
 
-        fireEvent.change(titleField, { target: { value: 'a' } });
-        fireEvent.change(magField, { target: { value: '10.0' } });
-        fireEvent.change(placeField, { target: { value: 'b' } });
-        fireEvent.change(timeField, { target: { value: '0' } });
+        fireEvent.change(distanceField, { target: { value: '30' } });
+        fireEvent.change(magnitudeField, { target: { value: '1.2' } });
 
         expect(submitButton).toBeInTheDocument();
 
@@ -93,13 +104,11 @@ describe("EarthquakesCreatePage tests", () => {
 
         expect(axiosMock.history.post[0].params).toEqual(
             {
-            title: 'a',
-            mag: 10.0,
-            place: 'b',
-            time: 0
+            "distance": "30",
+            "magnitude": "1.2",
         });
 
-        expect(mockToast).toBeCalledWith("New earthquake Created - id: 17 title: a");
+        expect(mockToast).toBeCalledWith("1 Earthquakes retrieved");
         expect(mockNavigate).toBeCalledWith({ "to": "/earthquakes/list" });
     });
 
